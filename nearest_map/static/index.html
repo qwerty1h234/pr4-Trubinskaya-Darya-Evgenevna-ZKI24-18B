@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ближайший объект на карте</title>
+  <link rel="stylesheet" href="/vendor/leaflet.css">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/vendor/leaflet.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <aside>
+      <h1>Ближайший объект</h1>
+      <p class="intro">Выберите точку на карте, область и тип объекта. Поиск выполняется через k-d дерево.</p>
+      <form id="search-form">
+        <label for="category">Тип объекта</label>
+        <select id="category" required><option value="">Загрузка типов…</option></select>
+        <fieldset>
+          <legend>Точка поиска</legend>
+          <p class="hint">Нажмите на карту или введите координаты.</p>
+          <div class="row">
+            <label>Широта<input id="latitude" type="number" step="any" min="-85" max="85" value="55.752500" required></label>
+            <label>Долгота<input id="longitude" type="number" step="any" min="-180" max="180" value="37.611500" required></label>
+          </div>
+          <button id="set-point" type="button" class="secondary">Показать точку</button>
+        </fieldset>
+        <fieldset>
+          <legend>Область поиска</legend>
+          <p class="hint">Передвиньте и приблизьте карту, затем выберите её видимую область.</p>
+          <button id="set-area" type="button" class="secondary">Использовать видимую область</button>
+          <p id="area-description" class="hint"></p>
+        </fieldset>
+        <label class="checkbox"><input id="refresh" type="checkbox"> Загрузить свежие данные</label>
+        <button id="search" type="submit">Найти ближайший объект</button>
+      </form>
+      <p id="status" role="status" aria-live="polite">Загрузка карты…</p>
+      <section id="result" hidden>
+        <h2 id="object-name"></h2>
+        <p id="object-address"></p>
+        <p id="object-distance"></p>
+        <a id="object-link" target="_blank" rel="noopener noreferrer">Открыть объект в OpenStreetMap</a>
+      </section>
+      <div class="legend"><span class="point"></span> Точка поиска <span class="object"></span> Объекты <span class="nearest"></span> Ближайший</div>
+      <p class="hint">Расстояние — по прямой на локальной плоскости, не маршрут. Для площадных объектов используется их центр.</p>
+      <p class="hint">Данные: OpenStreetMap, Overpass API и Nominatim. Для загрузки карты и объектов нужен интернет.</p>
+    </aside>
+    <div id="map" aria-label="Интерактивная карта"></div>
+  </main>
+  <noscript>Для интерактивной карты включите JavaScript в браузере.</noscript>
+</body>
+</html>
